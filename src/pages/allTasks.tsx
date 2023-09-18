@@ -3,14 +3,26 @@ import { Container, Table, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+axios.interceptors.response.use(
+  res => res,
+  err => {
+    throw new Error(err.response.data?.message);
+  }
+)
+
 const AllTasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const navigate = useNavigate();
+  let noTasks = false;
 
   useEffect(() => {
     axios.get("http://localhost:4000/tasks/all").then((response) => {
+      if (response.data.length == 0) {
+        noTasks = true;
+      }
       setTasks(response.data);
     });
+
   }, []);
 
   return (
@@ -23,7 +35,7 @@ const AllTasks = () => {
             </Button>
           </Col>
         </Row>
-        <Table striped bordered hover>
+        {tasks.length > 0 && <Table striped bordered hover>
           <thead>
             <tr>
               <th>Id</th>
@@ -63,7 +75,8 @@ const AllTasks = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </Table>}
+        <p>There are no tasks to display!</p>
       </Container>
     </>
   );
