@@ -1,20 +1,21 @@
 FROM node:16 AS development
 ENV NODE_ENV development
-# Add a work directory
-WORKDIR /calendar-frontend
-# Cache and Install dependencies
 
-# add `/app/node_modules/.bin` to $PATH
+RUN mkdir /calendar-frontend && chown node:node /calendar-frontend
+WORKDIR /calendar-frontend
 ENV PATH /app/node_modules/.bin:$PATH
 
-# install app dependencies
+COPY --chown=node:node package.json package-lock.json* ./
+
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install
+RUN npm install typescript
+RUN npm install --package-lock-only
 RUN npm install react-scripts@3.4.1 -g
-
-# add app
+USER node
+COPY --chown=node:node . .
 COPY . ./
 
-# start app
+EXPOSE 3000
+
 CMD ["npm", "start"]

@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Modal, Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-const DeleteTask = () => {
+function DeleteTask() {
+  const [show, setShow] = useState(true);
+  const handleClose = () => setShow(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const deleteTaskHandler = () => {
+  function deleteTaskHandler() {
     axios.delete("http://localhost:4000/tasks/" + id).then(() => {
       navigate("/");
     });
@@ -14,27 +18,20 @@ const DeleteTask = () => {
 
   return (
     <>
-      <Container className="mt-2">
-        <Row>
-          <Col className="col-md-8 offset-md-2">
-            <legend>Confirm delete?</legend>
-            <Button
-              type="button"
-              variant="danger"
-              onClick={deleteTaskHandler}
-            >
-              Yes
-            </Button>
-            <Button
-              type="button"
-              variant="primary"
-              onClick={() => navigate("/")}
-            >
-              No
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => navigate("/")}>
+            No
+          </Button>
+          <Button variant="danger" onClick={deleteTaskHandler}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

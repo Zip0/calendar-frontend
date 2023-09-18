@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Modal, Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CompleteTask = () => {
+function CompleteTask() {
+  const [show, setShow] = useState(true);
+  const handleClose = () => setShow(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  const completeTaskHandler = () => {
-
+  
+  function completeTaskHandler() {
     axios.patch("http://localhost:4000/tasks/" + id).then(() => {
       navigate("/");
     });
@@ -14,27 +17,20 @@ const CompleteTask = () => {
 
   return (
     <>
-      <Container className="mt-2">
-        <Row>
-          <Col className="col-md-8 offset-md-2">
-            <legend>Complete task?</legend>
-            <Button
-              type="button"
-              variant="danger"
-              onClick={completeTaskHandler}
-            >
-              Yes
-            </Button>
-            <Button
-              type="button"
-              variant="primary"
-              onClick={() => navigate("/")}
-            >
-              No
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Complete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to complete this task?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => navigate("/")}>
+            No
+          </Button>
+          <Button variant="danger" onClick={completeTaskHandler}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
