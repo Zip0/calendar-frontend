@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -41,11 +42,25 @@ td {
   vertical-align: middle;
 }
 
-table           { border-collapse:collapse } /* Ensure no space between cells   */
-tr.strikeout td { position:relative        } /* Setup a new coordinate system   */
-tr.strikeout td:before {                     /* Create a new element that       */
-  content: " ";                              /* …has no text content            */
-  position: absolute;                        /* …is absolutely positioned       */
-  left: 0; top: 50%; width: 100%;            /* …with the top across the middle */
-  border-bottom: 2px solid #000;             /* …and with a border on the top   */
-}   
+table {
+  border-collapse: collapse
+}
+
+tr.strikeout td {
+  position: relative
+}
+
+tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  border-bottom: 2px solid #000;
+  pointer-events: none;
+}
+
+.navbar-brand {
+  width: 100%;
+  text-align: center;
+}

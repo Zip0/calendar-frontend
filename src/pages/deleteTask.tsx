@@ -1,19 +1,17 @@
 import axios from "axios";
-import { useRef } from "react";
-import { Button, Col, Container, Row, Form } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const DeleteTask = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
- 
-    const deleteTaskHandler = () => {
-        console.log(id)
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const deleteTaskHandler = () => {
     axios.delete("http://localhost:4000/tasks/" + id).then(() => {
       navigate("/");
     });
   };
-  
+
   return (
     <>
       <Container className="mt-2">

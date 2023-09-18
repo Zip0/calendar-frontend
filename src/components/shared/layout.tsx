@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
- 
+
 const Layout = ({ children }: any) => {
   return (
     <>
@@ -11,5 +11,5 @@ const Layout = ({ children }: any) => {
     </>
   );
 };
- 
+
 export default Layout;
