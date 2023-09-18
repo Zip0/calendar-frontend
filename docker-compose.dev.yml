@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  calendar-frontend-dev:
+    container_name: calendar-frontend-dev
+    image: calendar-frontend-dev
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/calendar-frontend/src
+    ports:
+      - 3000:3000
