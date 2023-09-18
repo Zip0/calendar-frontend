@@ -76,7 +76,7 @@ const AllTasks = () => {
             ))}
           </tbody>
         </Table>}
-        <p>There are no tasks to display!</p>
+        {tasks.length === 0 && <p>There are no tasks to display!</p>}
       </Container>
     </>
   );
