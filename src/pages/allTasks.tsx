@@ -3,12 +3,6 @@ import { Container, Table, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-axios.interceptors.response.use(
-  res => res,
-  err => {
-    throw new Error(err.response.data?.message + " Plase close this message and create a new task - the table will generate itself.");
-  }
-)
 
 const AllTasks = () => {
   const [tasks, setTasks] = useState<any[]>([]);
